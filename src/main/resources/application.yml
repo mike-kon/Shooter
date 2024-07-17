@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: shoot
+  mvc:
+    view:
+      prefix: /WEB-INF/
+      suffix: .jsp
+  kafka:
+    bootstrap-servers: localhost:9092
+    security:
+      protocol: "plaintext"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.UUIDSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+
+server:
+
+  port: 8090
+
+logging:
+  level:
+    root: warn
+    org.springframework.web.servlet.view: debug
+    kafka: info
+
+application:
+  shooters:
+    kafkalocal:
+      topic: pprs_product_migrator_in
+      addHeaderName: MESSAGE_TYPE
+      addHeaderValue: CREATOR
