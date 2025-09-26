@@ -5,31 +5,39 @@ import com.mikesoft.shoot.work.Worker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class MainController {
 
   private final Worker worker;
 
-  @GetMapping("/")
-  public String index(Model model) {
-    Map<String, String> typeList = worker.getAllShooters().stream()
-            .collect(Collectors.toMap(Shoot::getName, Shoot::getInfo));
-    model.addAttribute("typeList", typeList);
-    return "index";
+  @PostMapping("loadClass")
+  @Deprecated
+  public String loadClass(@RequestParam("jspName") String name) {
+    return worker.getAllShooters().stream()
+        .filter(x -> x.getName().equals(name))
+        .findFirst()
+        .orElseThrow()
+        .getJspFile();
   }
 
-  @PostMapping("/api/v1/loadClass")
-  public String loadClass(@RequestParam("jspName") String name) {
-    return worker.getAllShooters().stream().filter(x -> x.getName().equals(name)).findFirst().get().getJspFile();
+  @PostMapping("loadFromTemplate")
+  @Deprecated
+  public String loadFromTemplate(@RequestParam("templateName") String templateName, Model model) {
+    Map<String, String> template = worker.readTemplateFromFile(templateName);
+    String typeShootName = template.get("typeShoot");
+    Shoot shoot = worker.getAllShooters().stream()
+        .filter(x -> x.getName().equals(typeShootName))
+        .findFirst()
+        .orElseThrow();
+    return shoot.getJspFile();
   }
+
 }

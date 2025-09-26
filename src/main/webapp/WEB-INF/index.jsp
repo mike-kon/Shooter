@@ -1,61 +1,43 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
-
 <!DOCTYPE html>
-<html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html xml:lang="ru">
 <head>
-    <title>Стрельба по тарелкам</title>
-    <script>
-        function run() {
-            let objects = document.getElementById("form").childNodes;
-            let params = new URLSearchParams();
-            let select = document.getElementById("typeShoot");
-            params.append("typeShoot", select.value);
-            for (i=0; i< objects.length; ++i){
-                let obj = objects.item(i);
-                let name = obj.name;
-                if (name) {
-                    params.append(name, obj.value);
-                }
-            }
-            httpPostRequest('/api/v1/shoot', params, 'res');
-        }
-
-        function httpPostRequest(path, params, emel) {
-            var req = new XMLHttpRequest();
-            var address = location.origin + path;
-            req.open('POST', address, true);
-            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            req.setRequestHeader('Access-Control-Allow-Origin', location.origin);
-            req.onreadystatechange = function () {
-                if (req.readyState == req.DONE) {
-                    document.getElementById(emel).innerHTML = req.response;
-                }
-            }
-            req.send(params);
-        }
-        function loadJsp(select) {
-            let params = new URLSearchParams({jspName: select.value})
-            httpPostRequest('/api/v1/loadClass', params, 'form');
-        }
-    </script>
+  <title>Стрельба по тарелкам</title>
+  <link rel="stylesheet" href="main.css"/>
+  <script type="text/javascript" src="js/jquery-3.7.1.min.js" ></script>
+  <script type="text/javascript" src="js/main.js" ></script>
+  <script type="text/javascript" src="js/modal.js" ></script>
+  <script type="text/javascript" src="js/logging.js" ></script>
+  <script type="text/javascript" src="js/setupserver.js" ></script>
 </head>
-<div>
-    <h1>Стрельба по мишеням</h1>
-</div>
-<div>
-    <select name="typeShoot" id="typeShoot" onchange="loadJsp(this)">
-        <option selected disabled>выберите...</option>
-        <c:forEach items="${typeList}" var="item">
-            <option value="${item.key}"> ${item.value}</option>
-        </c:forEach>
-    </select>
-    <div id="form">
+<body>
+  <div class="main">
+    <div class="title">
+      <h1>Стрельба по тарелкам.</h1>
+      <br/>
+      <h2>Тестирование приложений</h2>
     </div>
-    <div>
-        <button onclick="run()">!!!SHOOT!!!</button>
+    <div class="buttons">
+      <button id="btnShooter" onclick="ShowShooter()">Шутер</button>
+      <button id="btnSaved" onclick="ShowSavers()">Сохраненные запросы</button>
+      <button id="btnServers" onclick="ShowSetupServers()">Настройка серверов</button>
+      <button id="btnAbout" onclick="ShowAbout()">О программе</button>
     </div>
-    <div id="res"></div>
-</div>
+    <div id="canvas"></div>
+    <div id="logging">
+      <p>Система стартовала</p>
+    </div>
+  </div>
+  <div id="modalBack"></div>
+  <div id="modalWin">
+    <form>
+      <div id="modalBlock">
+        <div id="modalBody"></div>
+        <input type="button" value="ok" onclick="runModal(this)">
+        <input type="button" value="cancel" onclick="hideModal()">
+      </div>
+    </form>
+  </div>
+
+</body>
 </html>

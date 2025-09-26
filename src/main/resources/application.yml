@@ -5,28 +5,18 @@ spring:
     view:
       prefix: /WEB-INF/
       suffix: .jsp
-  kafka:
-    bootstrap-servers: localhost:9092
-    security:
-      protocol: "plaintext"
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.UUIDSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-
-
 server:
-
-  port: 8090
-
+  port: ${APP_PORT:8080}
 logging:
   level:
-    root: warn
-    org.springframework.web.servlet.view: debug
-    kafka: info
-
+    root: info
+    javax.management.remote.rmi: info
+    sun.rmi.transport.tcp: info
+    sun.rmi.loader: info
+    web: debug
+    kafka: debug
 application:
   shooters:
+    save_dir: c:/tmp/save_data/files
     kafkalocal:
       topic: pprs_product_migrator_in
-      addHeaderName: MESSAGE_TYPE
-      addHeaderValue: CREATOR

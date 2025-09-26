@@ -1,0 +1,70 @@
+tbody {
+    vertical-align: top;
+}
+
+.stand {
+    display: block;
+    position: relative;
+}
+
+.standtop {
+    margin: 0 0 7px 10px;
+}
+
+.standleft {
+    display: inline-block;
+    border: black 1px inset;
+    position: relative;
+}
+
+.standbody {
+    border: black 1px solid;
+    display: inline-block;
+    position: relative;
+    margin: 0 5px 5px 10px;
+    padding: 5px 5px 5px 5px;
+}
+
+#canvas {
+    position: relative;
+}
+#modalBack {
+    margin: 0 0 0 0;
+    display: none;
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: gray;
+    opacity: 0.5;
+}
+
+#modalWin {
+    display: none;
+    margin: 0 0 0 0;
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+#modalBlock {
+    padding: 10px 10px 10px 10px;
+    border: black 1px solid;
+    border-radius: 3px 3px 3px 3px;
+    display: inline-block;
+    background-color: aquamarine;
+    position: absolute;
+    margin: 20% auto;
+    width: auto;
+    text-align: center;
+}
+
+#modalBody {
+    padding: 10px 10px 10px 10px;
+    margin-bottom: 10px;
+    border-bottom: black 1px solid;
+}
