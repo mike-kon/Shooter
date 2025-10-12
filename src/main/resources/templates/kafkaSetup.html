@@ -1,0 +1,21 @@
+<html>
+<body>
+<div>
+    <h4>Настройка сервера Кафка <span th:text="${serverName}" />></h4>
+    <form method="post" action="/api/v1/createKafkaServer">
+        Название:<input name="name" th:value="${serverName}">
+        <table>
+            <tr>
+                <th>Параметр</th>
+                <th>Значение</th>
+            </tr>
+            <tr>
+                <td>Брокер</td>
+                <td><input name="broker" th:value="${broker}"></td>
+            </tr>
+        </table>
+        <input type="submit" value="ok">
+    </form>
+</div>
+</body>
+</html>

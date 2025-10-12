@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div>
+    <h1> Привет, <span th:text="${username}"/></h1>
+    <br>
+    имя: <input th:value="${name}"/>
+    <br>
+    <select>
+        <option disabled selected>Выберите...</option>
+        <option th:each="nm:${family}"><span th:text="${nm}"/></option>
+    </select>
+</div>
+</body>
+</html>

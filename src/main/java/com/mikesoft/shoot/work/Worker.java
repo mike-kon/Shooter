@@ -30,6 +30,7 @@ import static com.mikesoft.shoot.dto.enums.ShootResultEnum.OK;
 @RequiredArgsConstructor
 @Getter
 @Slf4j
+@Deprecated
 public class Worker {
 
   private static final String PROJECT_NAME_PARAM = "projectName";

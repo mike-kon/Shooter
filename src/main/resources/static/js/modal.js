@@ -29,10 +29,16 @@ function runModal(elem) {
             hideModal();
         })
         .fail(function(xhr) {
-            const message = 'Ошибка при вызове ' +
+            if (xhr.responseJSON === undefined) {
+                logging(xhr.responseText);
+                console.log(xhr.status, xhr.statusText);
+            } else {
+                const message = 'Ошибка при вызове '
                 xhr.responseJSON.path + ":" +
                 xhr.responseJSON.status + ' ' + xhr.responseJSON.error;
-            logging(message);
-            console.log(xhr.responseJSON.status, xhr.responseJSON.error);
+                logging(message);
+                console.log(xhr.responseJSON.status, xhr.responseJSON.error);
+            }
+            hideModal();
         })
 }

@@ -1,7 +1,7 @@
-const baseUrl = "/api/v1";
+const baseUrl = "/api/v1/";
 
 function setButtonEnabled(id) {
-    $('button').each(function() {
+    $('button').each(function () {
         if (this.id === id) {
             $(this).prop('disabled', true);
         } else {
@@ -12,7 +12,7 @@ function setButtonEnabled(id) {
 
 function ShowShooter() {
     setButtonEnabled('btnShooter');
-    $.get("shooter", function(data) {
+    $.get("shooter", function (data) {
         $('#canvas').html(data);
     });
 }
@@ -23,7 +23,7 @@ function ShowSavers() {
 
 function ShowSetupServers() {
     setButtonEnabled('btnServers');
-    $.get("setupservers", function(data) {
+    $.get("setupservers", function (data) {
         $('#canvas').html(data);
     });
 }
@@ -33,10 +33,15 @@ function ShowAbout() {
     setButtonEnabled('btnAbout');
 }
 
-function getJsp(url, name, elem) {
+function getJsp(url, params, elem) {
     const actualUrl = baseUrl + url;
-    $.post(actualUrl, name, function(data) {
+    $.post(actualUrl, params, function (data) {
         $(elem).html(data);
     });
+}
 
+function showTest() {
+    $.post(baseUrl + "sandbox", {}, function (data) {
+        $('#canvas').html(data);
+    });
 }

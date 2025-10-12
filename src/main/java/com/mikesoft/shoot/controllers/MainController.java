@@ -1,5 +1,6 @@
 package com.mikesoft.shoot.controllers;
 
+import com.mikesoft.shoot.dto.enums.ServerType;
 import com.mikesoft.shoot.shooters.Shoot;
 import com.mikesoft.shoot.work.Worker;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller

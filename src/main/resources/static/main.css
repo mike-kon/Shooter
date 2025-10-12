@@ -2,6 +2,10 @@ tbody {
     vertical-align: top;
 }
 
+select {
+    min-width: 150px;
+}
+
 .stand {
     display: block;
     position: relative;

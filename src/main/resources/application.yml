@@ -4,7 +4,7 @@ spring:
   mvc:
     view:
       prefix: /WEB-INF/
-      suffix: .jsp
+      suffix: html
 server:
   port: ${APP_PORT:8080}
 logging:

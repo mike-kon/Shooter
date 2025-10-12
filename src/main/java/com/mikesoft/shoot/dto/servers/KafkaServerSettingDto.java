@@ -1,5 +1,6 @@
-package com.mikesoft.shoot.dto;
+package com.mikesoft.shoot.dto.servers;
 
+import com.mikesoft.shoot.dto.ServerSettingsDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,7 +8,6 @@ import lombok.Setter;
 @Setter
 public class KafkaServerSettingDto extends ServerSettingsDto {
   private String url;
-  private Integer port;
   private Boolean usedSsl;
   private SslSetting sslSetting;
 

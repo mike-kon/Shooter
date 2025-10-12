@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div>
+    <h4>Настройка Тестового сервера <span th:text="${serverName}" /></h4>
+    <form method="post" action="/api/v1/createServer">
+        Название:<input name="name" th:value="${serverName}"/><br/>
+        Параметр 1:<input name="value1" th:value="${value1}"/><br/>
+        Параметр 2:<input name="value2" th:value="${value2}"/><br/>
+        <input name="serverType" hidden th:value="${serverType}"/>
+        <input type="submit" value="ok">
+    </form>
+</div>
+</body>
+</html>

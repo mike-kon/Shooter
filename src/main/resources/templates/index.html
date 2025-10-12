@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xml:lang="ru">
+<head>
+  <title>Стрельба по тарелкам</title>
+  <link rel="stylesheet" href="main.css"/>
+  <script type="text/javascript" src="js/jquery-3.7.1.min.js" ></script>
+  <script type="text/javascript" src="js/main.js" ></script>
+  <script type="text/javascript" src="js/modal.js" ></script>
+  <script type="text/javascript" src="js/logging.js" ></script>
+  <script type="text/javascript" src="js/setupserver.js" ></script>
+</head>
+<body>
+  <div class="main">
+    <div class="title">
+      <h1>Стрельба по тарелкам.</h1>
+      <br/>
+      <h2>Тестирование приложений</h2>
+    </div>
+    <div class="buttons">
+      <button id="btnTest" onclick="showTest()">Проба</button>
+      <button id="btnShooter" onclick="ShowShooter()">Шутер</button>
+      <button id="btnSaved" onclick="ShowSavers()">Сохраненные запросы</button>
+      <button id="btnServers" onclick="ShowSetupServers()">Настройка серверов</button>
+      <button id="btnAbout" onclick="ShowAbout()">О программе</button>
+    </div>
+    <div id="canvas"></div>
+    <div id="logging">
+      <p>Система стартовала</p>
+    </div>
+  </div>
+  <div id="modalBack"></div>
+  <div id="modalWin">
+    <form>
+      <div id="modalBlock">
+        <div id="modalBody"></div>
+        <input type="button" value="ok" onclick="runModal(this)">
+        <input type="button" value="cancel" onclick="hideModal()">
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>
