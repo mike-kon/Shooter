@@ -2,9 +2,10 @@ package com.mikesoft.shoot.controllers;
 
 import com.mikesoft.shoot.dto.ServerSettingsDto;
 import com.mikesoft.shoot.dto.enums.ServerType;
-import com.mikesoft.shoot.dto.servers.TestServerDto;
 import com.mikesoft.shoot.operations.ServerListOperation;
+import com.mikesoft.shoot.operations.ServersFactory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,46 +18,35 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/api/v1/")
 @RequiredArgsConstructor
+@Slf4j
 public class SetupServerController {
 
   private final ServerListOperation serverListOperation;
+  private final ServersFactory serversFactory;
 
   @PostMapping("newServer")
   public String getEmptyController(@RequestParam ServerType serverType, Model model) {
-    model.addAttribute("serverType", serverType);
-    model.addAttribute("serverName", "?? Новый сервер ??");
-    switch (serverType) {
-      case TEST:
-        return "testSetup";
-      case KAFKA:
-        return "kafkaSetup";
-      case PSQL:
-        return "underconstruction";
-    }
-    return "underconstruction";
+    ServerSettingsDto server = serversFactory.createServer(serverType, "?? Новый сервер ??");
+    model.addAttribute("server", server);
+    return serverType.getMvcScript();
   }
 
   @PostMapping("getSetupServer")
   public String getServerControlController(@RequestParam UUID serverId, Model model) {
     ServerSettingsDto server = serverListOperation.getSavedServer(serverId);
-    model.addAttribute("serverType", server.getId());
-    model.addAttribute("serverName", server.getServerName());
-    if (server instanceof TestServerDto testServerDto) {
-      model.addAttribute("value1", testServerDto.getValue1());
-      model.addAttribute("value2", testServerDto.getValue2());
-      return "testSetup";
-    }
-    return "underconstruction";
+    model.addAttribute("server", server);
+    return server.getServerType().getMvcScript();
   }
 
-  @PostMapping("createServer")
-  public String createServer(@RequestParam Map<String, String> params, Model model) {
-    String serverName = params.get("name");
-    ServerType serverType = ServerType.valueOf(params.get("serverType"));
-    params.remove("name");
-    params.remove("serverType");
-    serverListOperation.addSavedServer(serverType, serverName, params);
+  @PostMapping("saveServer")
+  public String saveServer(@RequestParam Map<String, String> params) {
+    try {
+      serverListOperation.savedServer(params);
+    } catch (Exception e) {
+      log.error(e.getMessage());
+    }
     //todo Надо редиректить на страницу настройки серверов
     return "redirect:/";
+
   }
 }

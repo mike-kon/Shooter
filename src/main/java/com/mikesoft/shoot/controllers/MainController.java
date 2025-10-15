@@ -1,45 +1,28 @@
 package com.mikesoft.shoot.controllers;
 
-import com.mikesoft.shoot.dto.enums.ServerType;
-import com.mikesoft.shoot.shooters.Shoot;
-import com.mikesoft.shoot.work.Worker;
+import com.mikesoft.shoot.dto.ServerSettingsDto;
+import com.mikesoft.shoot.operations.ServerListOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Map;
+
 
 @Controller
-@RequestMapping("/api/v1")
+@RequestMapping("/mvc/v1")
 @RequiredArgsConstructor
 public class MainController {
 
-  private final Worker worker;
+  private final ServerListOperation serverListOperation;
 
-  @PostMapping("loadClass")
-  @Deprecated
-  public String loadClass(@RequestParam("jspName") String name) {
-    return worker.getAllShooters().stream()
-        .filter(x -> x.getName().equals(name))
-        .findFirst()
-        .orElseThrow()
-        .getJspFile();
-  }
-
-  @PostMapping("loadFromTemplate")
-  @Deprecated
-  public String loadFromTemplate(@RequestParam("templateName") String templateName, Model model) {
-    Map<String, String> template = worker.readTemplateFromFile(templateName);
-    String typeShootName = template.get("typeShoot");
-    Shoot shoot = worker.getAllShooters().stream()
-        .filter(x -> x.getName().equals(typeShootName))
-        .findFirst()
-        .orElseThrow();
-    return shoot.getJspFile();
+  @PostMapping("setupservers")
+  public String setupServers(Model model) {
+    List<ServerSettingsDto> savedServerList = serverListOperation.getSavedServers();
+    model.addAttribute("savedServerList", savedServerList);
+    return "setupservers";
   }
 
 }

@@ -24,29 +24,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class RootController {
 
-  private final Worker worker;
-  private final ServerListOperation serverListOperation;
-
   @GetMapping("/")
   public String index(Model model) {
     return "index";
   }
 
-  @GetMapping("shooter")
-  public String shooter(Model model) {
-    Map<String, String> typeList = worker.getAllShooters().stream()
-        .collect(Collectors.toMap(Shoot::getName, Shoot::getInfo));
-    model.addAttribute("typeList", typeList);
-    return "shooter";
-  }
-
-  @GetMapping("setupservers")
-  public String setupServers(Model model) {
-
-    List<ServerSettingsDto> savedServerList = serverListOperation.getSavedServers();
-    model.addAttribute("savedServerList", savedServerList);
-    return "setupservers";
-  }
 
   @PostMapping("error")
   public String errorHandler(@RequestBody String params) {

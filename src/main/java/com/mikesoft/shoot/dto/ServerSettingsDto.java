@@ -11,13 +11,12 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 public abstract class ServerSettingsDto {
+
+  public static final String SERVER_NAME = "serverName";
+  public static final String SERVER_TYPE = "serverType";
+
   private UUID id;
   private ServerType serverType;
   private String serverName;
 
-  protected ServerSettingsDto(ServerType serverType, String serverName) {
-    this.id = UUID.randomUUID();
-    this.serverType = serverType;
-    this.serverName = serverName;
-  }
 }

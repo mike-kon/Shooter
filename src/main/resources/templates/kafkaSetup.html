@@ -2,8 +2,8 @@
 <body>
 <div>
     <h4>Настройка сервера Кафка <span th:text="${serverName}" />></h4>
-    <form method="post" action="/api/v1/createKafkaServer">
-        Название:<input name="name" th:value="${serverName}">
+    <form method="post" action="/api/v1/saveServer">
+        Название:<input name="serverName" th:value="${serverName}">
         <table>
             <tr>
                 <th>Параметр</th>

@@ -1,4 +1,14 @@
-const baseUrl = "/api/v1/";
+const version = "v1"
+const baseRequestUrl = "/api/";
+const baseMvcUrl = "/mvc/";
+
+function getRequestUrl(url) {
+    return baseRequestUrl + version + "/" + url;
+}
+
+function getMvcUrl(url) {
+    return baseMvcUrl + version + "/" + url;
+}
 
 function setButtonEnabled(id) {
     $('button').each(function () {
@@ -23,7 +33,7 @@ function ShowSavers() {
 
 function ShowSetupServers() {
     setButtonEnabled('btnServers');
-    $.get("setupservers", function (data) {
+    $.post(getMvcUrl("setupservers"), function (data) {
         $('#canvas').html(data);
     });
 }
@@ -34,14 +44,14 @@ function ShowAbout() {
 }
 
 function getJsp(url, params, elem) {
-    const actualUrl = baseUrl + url;
+    const actualUrl = getRequestUrl(url);
     $.post(actualUrl, params, function (data) {
         $(elem).html(data);
     });
 }
 
 function showTest() {
-    $.post(baseUrl + "sandbox", {}, function (data) {
+    $.post(getRequestUrl("sandbox"), {}, function (data) {
         $('#canvas').html(data);
     });
 }

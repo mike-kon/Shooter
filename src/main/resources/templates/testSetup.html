@@ -2,12 +2,13 @@
 <html lang="en">
 <body>
 <div>
-    <h4>Настройка Тестового сервера <span th:text="${serverName}" /></h4>
-    <form method="post" action="/api/v1/createServer">
-        Название:<input name="name" th:value="${serverName}"/><br/>
-        Параметр 1:<input name="value1" th:value="${value1}"/><br/>
-        Параметр 2:<input name="value2" th:value="${value2}"/><br/>
-        <input name="serverType" hidden th:value="${serverType}"/>
+    <h4>Настройка Тестового сервера <span th:text="${server.serverName}" /></h4>
+    <form method="post" action="/api/v1/saveServer">
+        Название:<input name="serverName" th:value="${server.serverName}"/><br/>
+        Параметр 1:<input name="value1" th:value="${server.value1}"/><br/>
+        Параметр 2:<input name="value2" th:value="${server.value2}"/><br/>
+        <input name="serverType" hidden th:value="${server.serverType}"/>
+        <input name="id" hidden th:value="${server.id}"/>
         <input type="submit" value="ok">
     </form>
 </div>

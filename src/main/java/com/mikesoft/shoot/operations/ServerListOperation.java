@@ -1,10 +1,9 @@
 package com.mikesoft.shoot.operations;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mikesoft.shoot.dto.ServerSettingsDto;
-import com.mikesoft.shoot.dto.enums.ServerType;
-import com.mikesoft.shoot.utils.jsonchildern.JsonChildren;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,9 +24,8 @@ public class ServerListOperation {
 
   private static final String SAVE_SERVERS_FILE_NAME = "saved_service.json";
 
-  private final SaveServersFactory saveServersFactory;
+  private final ServersFactory serversFactory;
   private final ObjectMapper objectMapper;
-  private final JsonChildren jsonChildren;
 
   @Value("${application.shooters.save_dir}")
   private String saveDir;
@@ -40,7 +38,11 @@ public class ServerListOperation {
     File savedFile = new File(filePath);
     if (savedFile.exists()) {
       try {
-        List<ServerSettingsDto> loadedServers = jsonChildren.readChildrenFromJson(savedFile, ServerType.class, "serverType");
+        List<Map<String, String>> rawList = objectMapper.readValue(savedFile, new TypeReference<>() {
+        });
+        List<ServerSettingsDto> loadedServers = rawList.stream()
+            .map(serversFactory::createServer)
+            .toList();
         servers.clear();
         servers.addAll(loadedServers);
       } catch (IOException e) {
@@ -55,13 +57,29 @@ public class ServerListOperation {
     return servers;
   }
 
-  public void addSavedServer(ServerType serverType, String serverName, Map<String, String> params) {
-    ServerSettingsDto newServer = saveServersFactory.createServer(serverType, serverName, params);
-    servers.add(newServer);
-    saveServer();
+  public void savedServer(Map<String, String> params) throws JsonMappingException {
+    ServerSettingsDto server;
+    if (params.containsKey("id")) {
+      // update
+      UUID id = UUID.fromString(params.get("id"));
+      updateServer(id, params);
+    } else {
+      // create new
+      server = serversFactory.createServer(params);
+      servers.add(server);
+    }
+    saveAllServers();
   }
 
-  private void saveServer() {
+  private void updateServer(UUID id, Map<String, String> params) throws JsonMappingException {
+    ServerSettingsDto server = servers.stream()
+        .filter(x -> x.getId().equals(id))
+        .findFirst()
+        .orElseThrow();
+    objectMapper.updateValue(server, params);
+  }
+
+  private void saveAllServers() {
     String filePath = saveDir + File.separator + SAVE_SERVERS_FILE_NAME;
     File savedFile = new File(filePath);
     try {
