@@ -2,8 +2,8 @@ package com.mikesoft.shoot.controllers;
 
 import com.mikesoft.shoot.dto.ServerSettingsDto;
 import com.mikesoft.shoot.dto.enums.ServerType;
-import com.mikesoft.shoot.operations.ServerListOperation;
-import com.mikesoft.shoot.operations.ServersFactory;
+import com.mikesoft.shoot.operations.saveservers.ServerListOperation;
+import com.mikesoft.shoot.operations.saveservers.ServersFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/")
 @RequiredArgsConstructor
 @Slf4j
-public class SetupServerController {
+public class SetupServerMvcController {
 
   private final ServerListOperation serverListOperation;
   private final ServersFactory serversFactory;
@@ -47,6 +47,6 @@ public class SetupServerController {
     }
     //todo Надо редиректить на страницу настройки серверов
     return "redirect:/";
-
   }
+
 }

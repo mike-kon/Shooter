@@ -31,7 +31,7 @@ function ShowSavers() {
 
 }
 
-function ShowSetupServers() {
+function showSetupServers() {
     setButtonEnabled('btnServers');
     $.post(getMvcUrl("setupservers"), function (data) {
         $('#canvas').html(data);

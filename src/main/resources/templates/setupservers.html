@@ -3,13 +3,13 @@
 <div class="stand">
     <div class="standtop">
         <input type="button" value="добавить" onclick="askServerType()"/>
-        <input type="button" value="удалить"/>
+        <input type="button" value="удалить" onclick="deleteServer()"/>
     </div>
     <table>
         <tr>
             <td>
                 <div class="standleft">
-                    <select size="10" onclick="getJsp('getSetupServer',{serverId: value},'#setupServer')">
+                    <select name="savedServer" size="10" onclick="getJsp('getSetupServer',{serverId: value},'#setupServer')">
                         <option th:each="item: ${savedServerList}" th:value="${item.id}"><span th:text="${item.serverName}"/>(<span th:text="${item.serverType}"/>)</option>
                     </select>
                 </div>

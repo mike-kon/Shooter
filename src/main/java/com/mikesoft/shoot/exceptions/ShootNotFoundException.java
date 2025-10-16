@@ -1,5 +1,6 @@
 package com.mikesoft.shoot.exceptions;
 
+@Deprecated
 public class ShootNotFoundException extends RuntimeException{
   private final String shootName;
 

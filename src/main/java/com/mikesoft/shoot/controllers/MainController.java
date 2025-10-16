@@ -1,7 +1,7 @@
 package com.mikesoft.shoot.controllers;
 
 import com.mikesoft.shoot.dto.ServerSettingsDto;
-import com.mikesoft.shoot.operations.ServerListOperation;
+import com.mikesoft.shoot.operations.saveservers.ServerListOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

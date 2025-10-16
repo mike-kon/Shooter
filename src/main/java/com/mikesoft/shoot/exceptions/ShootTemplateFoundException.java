@@ -1,5 +1,6 @@
 package com.mikesoft.shoot.exceptions;
 
+@Deprecated
 public class ShootTemplateFoundException extends RuntimeException{
   private final String shootName;
 
